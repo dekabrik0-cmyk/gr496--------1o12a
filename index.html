@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Приглашение на выпускной — 496Н</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #faf6f0;
+      --cream-deep: #f0e6d8;
+      --cream-shadow: #e5d9c8;
+      --blush: #e8d4c4;
+      --sage: #9c8b7a;
+      --ink: #3d3429;
+      --gold: #b8956a;
+      --envelope: #f3e8dc;
+      --envelope-dark: #dcc9b4;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+
+    body {
+      font-family: "PT Serif", Georgia, "Times New Roman", serif;
+      background: var(--cream);
+      color: var(--ink);
+      min-height: 100vh;
+      line-height: 1.55;
+      font-size: 1.125rem;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .flower {
+      position: absolute;
+      opacity: 0.35;
+      pointer-events: none;
+    }
+
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--gold), #d4a574);
+      transform-origin: left;
+      transform: scaleX(0);
+      z-index: 100;
+    }
+
+    .scroll-hint {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 50;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      font-size: 1.05rem;
+      color: var(--sage);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.35s ease;
+    }
+    .scroll-hint.visible { opacity: 1; }
+    .scroll-hint .chevron {
+      width: 32px;
+      height: 32px;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      animation: chevronPulse 2.2s ease-in-out infinite;
+    }
+    .scroll-hint .chevron svg { width: 16px; height: 16px; stroke: var(--gold); }
+    @keyframes chevronPulse {
+      0%, 100% { opacity: 0.55; }
+      50% { opacity: 1; }
+    }
+
+    section {
+      position: relative;
+      padding: clamp(2rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem);
+      overflow: hidden;
+    }
+
+    .hero {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: grid;
+      align-content: center;
+      justify-items: center;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 120% 80% at 50% 0%, var(--cream-deep) 0%, transparent 55%),
+        var(--cream);
+    }
+
+    .hero-inner {
+      max-width: 720px;
+      animation: fadeIn 0.5s ease-out both;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    .hero-badge {
+      display: inline-block;
+      padding: 0.4rem 1.35rem;
+      border: 1px solid var(--gold);
+      border-radius: 999px;
+      font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--sage);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-family: "PT Serif", Georgia, serif;
+      font-size: clamp(2.35rem, 7vw, 3.35rem);
+      font-weight: 700;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 0.85rem;
+    }
+
+    .hero p.lead {
+      font-size: clamp(1.2rem, 3.5vw, 1.5rem);
+      color: var(--sage);
+      max-width: 36ch;
+      margin: 0 auto 2rem;
+    }
+
+    .hero-photo-wrap {
+      position: relative;
+      width: min(88vw, 380px);
+      margin: 0 auto;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow:
+        0 20px 50px rgba(61, 52, 41, 0.12),
+        0 0 0 1px rgba(184, 149, 106, 0.2);
+      animation: fadeIn 0.55s 0.08s ease-out both;
+    }
+    .hero-photo-wrap img {
+      width: 100%;
+      height: auto;
+      vertical-align: middle;
+      display: block;
+    }
+
+    .section-tall {
+      min-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, var(--cream) 0%, var(--cream-deep) 50%, var(--cream) 100%);
+    }
+
+    .ornament {
+      width: min(200px, 40vw);
+      margin: 2rem auto;
+      opacity: 0.5;
+    }
+
+    .mid-grid {
+      display: grid;
+      gap: clamp(2rem, 5vw, 3.5rem);
+      max-width: 1000px;
+      margin: 0 auto;
+      align-items: center;
+    }
+    @media (min-width: 768px) {
+      .mid-grid { grid-template-columns: 1fr 1fr; }
+    }
+
+    .mid-text h2 {
+      font-family: "PT Serif", Georgia, serif;
+      font-size: clamp(1.65rem, 4.5vw, 2.15rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--ink);
+    }
+    .mid-text p {
+      font-size: clamp(1.15rem, 2.8vw, 1.35rem);
+      color: var(--sage);
+    }
+
+    .photo-card {
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 16px 40px rgba(61, 52, 41, 0.1);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .photo-card {
+        transition: box-shadow 0.25s ease;
+      }
+      .photo-card:hover {
+        box-shadow: 0 20px 48px rgba(61, 52, 41, 0.14);
+      }
+    }
+    .photo-card img { width: 100%; height: auto; display: block; }
+
+    .scroll-nudge {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+      color: var(--sage);
+      font-size: 1.2rem;
+    }
+    .scroll-nudge strong {
+      display: block;
+      font-family: "PT Serif", Georgia, serif;
+      font-size: clamp(1.35rem, 4vw, 1.65rem);
+      color: var(--ink);
+      margin-top: 0.5rem;
+      font-weight: 700;
+    }
+
+    /* Envelope block */
+    .envelope-landing {
+      min-height: 100vh;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: clamp(3rem, 12vh, 6rem);
+      padding-top: 4rem;
+      background:
+        radial-gradient(ellipse 100% 60% at 50% 100%, var(--blush) 0%, transparent 60%),
+        var(--cream);
+    }
+
+    .tap-label {
+      font-family: "PT Serif", Georgia, serif;
+      font-size: clamp(1.35rem, 4vw, 1.75rem);
+      font-weight: 700;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+      text-align: center;
+      animation: tapFade 2.5s ease-in-out infinite;
+    }
+    @keyframes tapFade {
+      0%, 100% { opacity: 0.75; }
+      50% { opacity: 1; }
+    }
+
+    .envelope-scene {
+      perspective: 600px;
+      transform-style: preserve-3d;
+      width: min(300px, 78vw);
+      height: 200px;
+      position: relative;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      contain: layout style;
+    }
+    .envelope-scene.opened { pointer-events: none; cursor: default; }
+
+    .env-back {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(145deg, var(--envelope) 0%, var(--envelope-dark) 100%);
+      border-radius: 4px;
+      box-shadow: 0 12px 40px rgba(61, 52, 41, 0.18);
+    }
+
+    .env-inner {
+      position: absolute;
+      left: 8%;
+      right: 8%;
+      bottom: 0;
+      height: 72%;
+      background: var(--cream-deep);
+      border-radius: 2px;
+    }
+
+    .letter-sheet {
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: 8px;
+      height: 55%;
+      background: linear-gradient(180deg, #fffef9 0%, var(--cream) 100%);
+      border-radius: 2px;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.06);
+      transform-origin: bottom center;
+      transform: translate3d(0, 0, 0);
+      transition: transform 0.7s ease-out;
+      z-index: 2;
+    }
+    .envelope-scene.opening .letter-sheet,
+    .envelope-scene.opened .letter-sheet {
+      transform: translate3d(0, calc(-100% - 55px), 0);
+      z-index: 20;
+    }
+
+    .env-flap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 52%;
+      background: linear-gradient(180deg, #efe2d4 0%, var(--envelope) 55%);
+      clip-path: polygon(0 0, 50% 100%, 100% 0);
+      transform-origin: 50% 0;
+      transform: translate3d(0, 0, 0) rotateX(0deg);
+      transition: transform 0.55s ease-out;
+      z-index: 4;
+      box-shadow: 0 4px 12px rgba(61, 52, 41, 0.08);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .envelope-scene.opening .env-flap,
+    .envelope-scene.opened .env-flap {
+      transform: rotateX(180deg);
+    }
+
+    .env-front {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 100%;
+      z-index: 3;
+      pointer-events: none;
+    }
+    .env-front::before,
+    .env-front::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      width: 50.5%;
+      height: 58%;
+      background: var(--envelope-dark);
+    }
+    .env-front::before {
+      left: 0;
+      clip-path: polygon(0 0, 0 100%, 100% 100%);
+      opacity: 0.9;
+    }
+    .env-front::after {
+      right: 0;
+      clip-path: polygon(100% 0, 100% 100%, 0 100%);
+      background: var(--envelope);
+      opacity: 0.98;
+    }
+
+    .seal {
+      position: absolute;
+      left: 50%;
+      top: 38%;
+      transform: translate3d(-50%, -50%, 0);
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 30% 30%, #f5e6dc, #d4b896);
+      border: 2px solid rgba(184, 149, 106, 0.5);
+      box-shadow: 0 4px 14px rgba(61, 52, 41, 0.2);
+      display: grid;
+      place-items: center;
+      z-index: 6;
+      transition: opacity 0.35s ease;
+    }
+    .seal span {
+      color: #a07060;
+      font-size: 1.35rem;
+      line-height: 1;
+    }
+    .envelope-scene.opening .seal,
+    .envelope-scene.opened .seal {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    /* Letter overlay (full invitation) */
+    .letter-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(61, 52, 41, 0.55);
+      display: grid;
+      place-items: center;
+      padding: clamp(1rem, 4vw, 2rem);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.35s ease, visibility 0.35s;
+      contain: strict;
+    }
+    .letter-overlay.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .letter-paper {
+      width: min(100%, 560px);
+      max-height: min(88vh, 720px);
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      background:
+        linear-gradient(90deg, rgba(184, 149, 106, 0.06) 0%, transparent 8%, transparent 92%, rgba(184, 149, 106, 0.06) 100%),
+        linear-gradient(180deg, #fffefb 0%, var(--cream) 100%);
+      border-radius: 3px;
+      padding: clamp(2rem, 5vw, 2.85rem) clamp(1.6rem, 5vw, 2.6rem);
+      box-shadow:
+        0 25px 80px rgba(0, 0, 0, 0.2),
+        0 0 0 1px rgba(184, 149, 106, 0.25);
+      transform: translate3d(0, 12px, 0);
+      opacity: 0;
+      transition: transform 0.45s ease-out, opacity 0.4s ease-out;
+      position: relative;
+      contain: content;
+    }
+    .letter-overlay.show .letter-paper {
+      transform: translate3d(0, 0, 0);
+      opacity: 1;
+    }
+
+    .letter-paper::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      opacity: 0.4;
+    }
+
+    .letter-paper h3 {
+      font-family: "PT Serif", Georgia, serif;
+      font-size: clamp(1.65rem, 4.5vw, 2rem);
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 1.35rem;
+      color: var(--ink);
+    }
+
+    .letter-body {
+      font-size: clamp(1.2rem, 3.4vw, 1.45rem);
+      line-height: 1.65;
+      color: var(--ink);
+      text-align: center;
+    }
+    .letter-body p { margin-bottom: 1.1rem; }
+    .letter-sign {
+      margin-top: 1.75rem;
+      font-family: "PT Serif", Georgia, serif;
+      font-size: clamp(1.2rem, 3.2vw, 1.4rem);
+      font-weight: 700;
+      color: var(--sage);
+    }
+
+    .letter-close {
+      margin-top: 1.5rem;
+      width: 100%;
+      padding: 0.75rem;
+      font-family: inherit;
+      font-size: 1.1rem;
+      background: transparent;
+      border: 1px solid var(--gold);
+      color: var(--sage);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+    }
+    .letter-close:hover {
+      background: var(--cream-deep);
+      color: var(--ink);
+    }
+
+    /* Flower SVG positions */
+    .deco-flowers { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .deco-flowers svg {
+      position: absolute;
+      width: clamp(80px, 18vw, 140px);
+      height: auto;
+      opacity: 0.22;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .scroll-hint .chevron, .tap-label { animation: none; }
+      .hero-inner, .hero-photo-wrap { animation: none; opacity: 1; }
+      .env-flap, .letter-sheet, .letter-paper, .letter-overlay { transition-duration: 0.01ms; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+  <div class="deco-flowers" aria-hidden="true">
+    <svg style="top:8%; left:4%;" viewBox="0 0 100 100" fill="none"><path d="M50 20c8 12 20 20 20 32 0 14-12 24-20 24s-20-10-20-24c0-12 12-20 20-32z" fill="#c9a88a"/><circle cx="50" cy="52" r="8" fill="#d4b896"/><path d="M50 60v35" stroke="#9c8b7a" stroke-width="2"/></svg>
+    <svg style="top:22%; right:6%;" viewBox="0 0 100 100"><path d="M50 15l6 18h18l-14 10 5 18-15-11-15 11 5-18-14-10h18z" fill="#d4b896" opacity="0.5"/></svg>
+    <svg style="bottom:30%; left:8%;" viewBox="0 0 100 100" fill="none"><ellipse cx="50" cy="45" rx="22" ry="28" fill="#e8d4c4"/><circle cx="50" cy="40" r="10" fill="#c9a88a"/></svg>
+    <svg style="bottom:12%; right:10%;" viewBox="0 0 100 100" fill="none"><path d="M30 50 Q50 25 70 50 Q50 75 30 50" fill="#c9a88a" opacity="0.6"/><path d="M50 50 Q70 35 50 20 Q30 35 50 50" fill="#d4b896" opacity="0.5"/></svg>
+  </div>
+
+  <div class="scroll-hint visible" id="scrollHint">
+    <span>Листайте страницу вниз</span>
+    <div class="chevron" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div class="flower" style="top:10%; right:15%; width:60px; height:60px; background:radial-gradient(circle,#e8d4c4,transparent 70%); border-radius:50%;"></div>
+    <div class="flower" style="bottom:20%; left:10%; width:80px; height:80px; background:radial-gradient(circle,#dcc9b4,transparent 65%); border-radius:50%;"></div>
+    <div class="hero-inner">
+      <div class="hero-badge">496Н</div>
+      <h1>Выпускной вечер</h1>
+      <p class="lead">Мы подготовили для вас приглашение — оно ждёт внизу страницы</p>
+      <div class="hero-photo-wrap">
+        <img src="photo_2026-04-09_17-02-27.jpg" alt="Фото группы" width="800" height="600" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section-tall">
+    <svg class="ornament" viewBox="0 0 200 40" fill="none" aria-hidden="true">
+      <path d="M20 20h160M100 8v24" stroke="#b8956a" stroke-width="1.2" opacity="0.6"/>
+      <circle cx="100" cy="20" r="4" fill="#b8956a" opacity="0.5"/>
+    </svg>
+    <div class="mid-grid">
+      <div class="mid-text">
+        <h2>С теплом и благодарностью</h2>
+        <p>Каждый пройденный семестр — это ваша поддержка и знания. Ниже — наше официальное приглашение в изящной форме.</p>
+      </div>
+      <div class="photo-card">
+        <img src="photo_2026-04-09_17-02-33.jpg" alt="Фото выпускников" width="800" height="600" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  <div class="scroll-nudge">
+    Ещё чуть-чуть — конверт уже рядом
+    <strong>Дойдите до конца страницы</strong>
+  </div>
+
+  <section class="section-tall" style="min-height:70vh;">
+    <p style="max-width:480px; text-align:center; font-size:1.3rem; color:var(--sage); line-height:1.7;">
+      Пусть этот день станет тёплым воспоминанием. Листайте дальше.
+    </p>
+  </section>
+
+  <div class="envelope-landing" id="envelopeBlock">
+    <p class="tap-label">Нажмите на конверт</p>
+    <div class="envelope-scene" id="envelope" role="button" tabindex="0" aria-label="Открыть приглашение">
+      <div class="env-back"></div>
+      <div class="env-inner"></div>
+      <div class="letter-sheet" aria-hidden="true"></div>
+      <div class="env-front"></div>
+      <div class="env-flap"></div>
+      <div class="seal"><span aria-hidden="true">♥</span></div>
+    </div>
+  </div>
+
+  <div class="letter-overlay" id="letterOverlay" role="dialog" aria-modal="true" aria-labelledby="letterTitle">
+    <div class="letter-paper">
+      <h3 id="letterTitle">Приглашение</h3>
+      <div class="letter-body" id="letterContent"></div>
+      <p class="letter-sign">С любовью, 496Н</p>
+      <button type="button" class="letter-close" id="closeLetter">Закрыть</button>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const progress = document.getElementById("scrollProgress");
+      const hint = document.getElementById("scrollHint");
+      const envelope = document.getElementById("envelope");
+      const overlay = document.getElementById("letterOverlay");
+      const letterContent = document.getElementById("letterContent");
+      const closeBtn = document.getElementById("closeLetter");
+      const invitationParagraphs = [
+        "Уважаемый преподаватель!",
+        "Мы — группа 496Н — приглашаем вас на наш выпускной, который состоится 29 мая в 13:00 в ТКЦ «Братск-АРТ».",
+        "Спасибо за переданный опыт и знания. Нам было бы очень приятно Ваше присутствие.",
+      ];
+
+      var scrollRaf = 0;
+      function onScroll() {
+        if (scrollRaf) return;
+        scrollRaf = requestAnimationFrame(function () {
+          scrollRaf = 0;
+          var doc = document.documentElement;
+          var scrollTop = doc.scrollTop || document.body.scrollTop;
+          var height = doc.scrollHeight - doc.clientHeight;
+          var p = height > 0 ? scrollTop / height : 1;
+          progress.style.transform = "scaleX(" + Math.min(1, Math.max(0, p)) + ")";
+
+          var nearBottom = scrollTop + window.innerHeight >= doc.scrollHeight - 180;
+          hint.classList.toggle("visible", !nearBottom);
+        });
+      }
+
+      window.addEventListener("scroll", onScroll, { passive: true });
+      onScroll();
+
+      let opened = false;
+      function openEnvelope() {
+        if (opened) return;
+        opened = true;
+        envelope.classList.add("opening");
+        setTimeout(function () {
+          envelope.classList.add("opened");
+          envelope.classList.remove("opening");
+        }, 560);
+
+        setTimeout(function () {
+          letterContent.innerHTML = "";
+          invitationParagraphs.forEach(function (text) {
+            var p = document.createElement("p");
+            p.textContent = text;
+            letterContent.appendChild(p);
+          });
+          overlay.classList.add("show");
+          closeBtn.focus();
+        }, 720);
+      }
+
+      envelope.addEventListener("click", openEnvelope);
+      envelope.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openEnvelope();
+        }
+      });
+
+      function closeLetter() {
+        overlay.classList.remove("show");
+        opened = false;
+        envelope.classList.remove("opened", "opening");
+        letterContent.innerHTML = "";
+      }
+      closeBtn.addEventListener("click", closeLetter);
+      overlay.addEventListener("click", function (e) {
+        if (e.target === overlay) closeLetter();
+      });
+
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && overlay.classList.contains("show")) closeLetter();
+      });
+    })();
+  </script>
+</body>
+</html>
